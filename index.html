@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Foundational Definitions</title>
+<meta name="description" content="A walk through the Foundational Definitions of the Design Basis for AI Governance in Critical Infrastructure: what each one says, why it matters, and its formal statement, term by term.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<style>
+  :root{
+    --paper:#FFFFFF; --panel:#F4F5F7; --ink:#111418; --muted:#3D4550; --rule:#C9CED6;
+    --blue:#0B3D91;      /* links, structure */
+    --amber:#B34700;     /* the Bright Line */
+    --green:#0A6B3D;     /* plain-English readings */
+    --flag-bg:#FFD60A; --flag-ink:#111418;
+    --serif:'Spectral',Georgia,'Times New Roman',serif;
+    --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:19px;line-height:1.65}
+  a{color:var(--blue)}
+  a:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .app{display:grid;grid-template-columns:300px minmax(0,1fr);min-height:100vh}
+  .nav{background:var(--panel);border-right:4px solid var(--amber);padding:28px 22px 48px;position:sticky;top:0;height:100vh;overflow-y:auto}
+  .brand .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin:0 0 8px;font-weight:600}
+  .brand h1{font-size:23px;line-height:1.2;margin:0}
+  .brand p{font-size:14px;color:var(--muted);margin:8px 0 0}
+  .grouplabel{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:24px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--rule);font-weight:600}
+  .nav a{display:block;text-decoration:none;color:var(--ink);font-size:16px;padding:4px 8px;border-radius:4px}
+  .nav a .d{font-family:var(--mono);font-size:12px;color:var(--blue);font-weight:600;margin-right:6px}
+  .nav a:hover{background:#E3E7EE}
+  .nav a.on{background:var(--blue);color:#fff}
+  .nav a.on .d{color:#FFD60A}
+  #main:focus{outline:none}
+  .content{padding:48px clamp(16px,6vw,88px) 80px;max-width:980px}
+  .content h1{font-size:38px;line-height:1.15;margin:0 0 12px}
+  .content h2{font-size:27px;margin:44px 0 10px;padding-top:10px;border-top:2px solid var(--ink)}
+  .content h3{font-size:21px;margin:28px 0 6px;font-style:italic}
+  .content p,.content li{max-width:72ch}
+  .lede{font-size:21px;color:var(--muted)}
+  blockquote{margin:18px 0;padding:12px 18px;border-left:5px solid var(--blue);background:var(--panel)}
+  blockquote p{margin:6px 0}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);padding:1px 5px;border-radius:3px}
+  table{border-collapse:collapse;width:100%;margin:16px 0;font-size:17px}
+  th,td{border:1px solid var(--rule);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--panel)}
+  /* a formal statement */
+  .stmt{border:2px solid var(--ink);border-radius:6px;margin:22px 0;padding:0;overflow:hidden}
+  .stmt .s-head{background:var(--ink);color:#fff;font-family:var(--mono);font-size:13px;letter-spacing:.06em;padding:7px 14px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .stmt .s-body{padding:6px 16px 12px}
+  .stmt .lbl{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:12px 0 2px;font-weight:600}
+  .stmt .plain{color:var(--green)}
+  .stmt .words{overflow-wrap:anywhere;font-family:var(--mono);font-size:16px;font-weight:600;line-height:1.55;background:#FFF4E5;border-left:5px solid var(--amber);padding:10px 12px;margin:4px 0}
+  .stmt .aloud{font-style:italic}
+  .stmt .sym{overflow-x:auto;padding:4px 0}
+  .flag{display:inline-block;background:var(--flag-bg);color:var(--flag-ink);border:2px solid var(--flag-ink);font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:3px}
+  .flagbar{background:var(--flag-bg);color:var(--flag-ink);border:2px solid var(--flag-ink);padding:10px 14px;margin:0 0 24px;font-size:16px}
+  .new{display:inline-block;background:var(--blue);color:#fff;font-family:var(--mono);font-size:12px;font-weight:600;padding:2px 8px;border-radius:3px;letter-spacing:.06em}
+  .terms dt{font-weight:700;margin-top:10px}
+  .terms dd{margin:2px 0 0 22px}
+  .katex-display{margin:.4em 0;overflow-x:auto;overflow-y:hidden;padding:.25em 0}
+  @media print{#main{outline:none}.stmt{overflow:visible}.stmt .s-head{border-radius:4px 4px 0 0}.nav{display:none}.app{display:block}.content{max-width:none;padding:0}.katex-display{overflow:visible}.stmt,.principle,.diagram{break-inside:avoid}}
+  .principle{border:4px solid var(--amber);padding:18px 22px;margin:26px 0;background:#FFF9F2}
+  .principle .words{overflow-wrap:anywhere;font-family:var(--mono);font-size:19px;font-weight:600;line-height:1.6}
+  .diagram{margin:24px 0;border:1px solid var(--rule);padding:12px;background:#fff}
+  .diagram svg{width:100%;height:auto;display:block}
+  .foot{margin-top:60px;padding-top:14px;border-top:1px solid var(--rule);font-size:14px;color:var(--muted)}
+  .menu{display:none}
+  @media (max-width:860px){
+    .app{grid-template-columns:minmax(0,1fr)}
+    table{display:block;overflow-x:auto}
+    .content{padding-left:16px;padding-right:16px}
+    .nav{position:static;height:auto;border-right:none;border-bottom:4px solid var(--amber)}
+    .nav nav{display:none}.nav.open nav{display:block}
+    .menu{display:inline-block;margin-top:12px;font-family:var(--mono);font-size:14px;background:var(--blue);color:#fff;border:0;padding:6px 12px;border-radius:4px}
+    body{font-size:18px}.content h1{font-size:30px}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="nav" id="nav">
+    <div class="brand">
+      <p class="eyebrow">Eclectic Technologies</p>
+      <h1>The Foundational Definitions</h1>
+      <p>What they say, why they matter, and their formal statements, term by term.</p>
+      <button class="menu" id="menu" aria-expanded="false" aria-controls="navlinks">Contents</button>
+    </div>
+    <nav id="navlinks" aria-label="Contents">
+      <div class="grouplabel">Start</div>
+      <a href="#/">The One Principle</a>
+      <a href="#/how-to-read">How to read the notation</a>
+      <div class="grouplabel">The eight instruments</div>
+      <a href="#/fd-bl"><span class="d">FD-BL</span>The Bright Line</a>
+      <a href="#/fd-ld"><span class="d">FD-LD</span>Layer Decomposition and Determinism</a>
+      <a href="#/fd-br"><span class="d">FD-BR</span>The Broker</a>
+      <a href="#/fd-ev"><span class="d">FD-EV</span>The Envelope</a>
+      <a href="#/fd-bl-d1"><span class="d">FD-BL-D1</span>Mode of Discharge</a>
+      <a href="#/fd-bl-d2"><span class="d">FD-BL-D2</span>Indication Integrity</a>
+      <a href="#/fd-ls"><span class="d">FD-LS</span>Local Sovereignty</a>
+      <a href="#/fd-dbl"><span class="d">FD-DBL</span>Design Basis Layers</a>
+      <div class="grouplabel">Across the sectors</div>
+      <a href="#/sectors">The sixteen sectors</a>
+      <div class="grouplabel">Reference</div>
+      <a href="#/cite">Cite this</a>
+    </nav>
+  </aside>
+  <main class="content" id="main" tabindex="-1">
+    <div id="page"><p>Loading…</p></div>
+    <div class="foot">Site version 0.1 · built on <em>FD — Foundational Definitions, November 2026 Edition</em> (<a href="https://doi.org/10.5281/zenodo.23401272">10.5281/zenodo.23401272</a>). Where this site and an instrument differ, the instrument governs. Every formal statement here is <span class="flag">Posted for Comment</span> until a mathematician has checked it. CC BY 4.0 · Timothy E. Roxey.</div>
+  </main>
+</div>
+<script>
+const ROUTES={
+  '':'pages/home.md','how-to-read':'pages/how-to-read.md',
+  'fd-bl':'pages/instruments/fd-bl.md','fd-ld':'pages/instruments/fd-ld.md','fd-br':'pages/instruments/fd-br.md',
+  'fd-ev':'pages/instruments/fd-ev.md','fd-bl-d1':'pages/instruments/fd-bl-d1.md','fd-bl-d2':'pages/instruments/fd-bl-d2.md',
+  'fd-ls':'pages/instruments/fd-ls.md','fd-dbl':'pages/instruments/fd-dbl.md',
+  'sectors':'pages/sectors.md','cite':'pages/cite.md'
+};
+// Math is lifted out before Markdown runs, so Markdown cannot mangle it, then typeset with KaTeX.
+function renderMath(src){
+  const store=[];
+  const keep=(tex,display)=>{store.push({tex,display});return 'KXMATH'+(store.length-1)+'XK';};
+  src=src.replace(/\$\$([\s\S]+?)\$\$/g,(m,t)=>keep(t,true));
+  src=src.replace(/(^|[^\\$])\$([^\s$][^$\n]*?)\$/g,(m,pre,t)=>pre+keep(t,false));
+  let html=marked.parse(src);
+  html=html.replace(/KXMATH(\d+)XK/g,(m,i)=>{
+    const s=store[+i];
+    try{return katex.renderToString(s.tex,{displayMode:s.display,throwOnError:false,output:'htmlAndMathml'});}
+    catch(e){return '<code>'+s.tex+'</code>';}
+  });
+  return html;
+}
+async function go(){
+  const key=(location.hash.replace(/^#\/?/,'').split('?')[0])||'';
+  const path=ROUTES[key]||ROUTES[''];
+  document.querySelectorAll('.nav a').forEach(a=>{
+    const k=a.getAttribute('href').replace(/^#\/?/,'');
+    a.classList.toggle('on',k===key); if(k===key) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
+  });
+  const el=document.getElementById('page');
+  try{
+    const r=await fetch(path,{cache:'no-cache'});
+    if(!r.ok) throw new Error(r.status);
+    el.innerHTML=renderMath(await r.text());
+  }catch(e){
+    el.innerHTML='<h1>Page not found</h1><p>This page could not be loaded. If you opened the file directly from disk, open it through the published site instead: browsers will not load the pages from a local file.</p>';
+  }
+  const t=el.querySelector('h1'); document.title=(t?t.textContent+' · ':'')+'The Foundational Definitions';
+  window.scrollTo(0,0); document.getElementById('main').focus({preventScroll:true});
+  document.getElementById('nav').classList.remove('open');
+}
+document.getElementById('menu').addEventListener('click',()=>{const n=document.getElementById('nav');n.classList.toggle('open');document.getElementById('menu').setAttribute('aria-expanded',n.classList.contains('open'));});
+window.addEventListener('hashchange',go); go();
+</script>
+</body>
+</html>
