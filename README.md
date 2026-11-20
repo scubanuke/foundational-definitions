@@ -14,6 +14,8 @@ A walk through the Foundational Definitions of *Design Basis for AI Governance i
 
 The pages are: `pages/home.md` (the One Principle and the stack diagram); `pages/how-to-read.md`; `pages/instruments/` (one page for each of the eight instruments); `pages/sectors.md` (one worked example for each of the sixteen sectors); and `pages/cite.md`.
 
+**Glossary.** `glossary.json` is the one glossary for the Eclectic Technologies sites. The course, the SMR licensing site and the CIKR examples site reference its entries rather than restating them, and the CIKR build reads it directly. Edit `glossary.json`, then run `python3 tools/build_glossary.py` to regenerate `pages/glossary.md`. Terms used on only one site stay in that site's own glossary.
+
 The pages must be served over http. Opening `index.html` from disk will not load them. To preview locally, run `python -m http.server` in this folder and open `http://localhost:8000`.
 
 ## Versions
